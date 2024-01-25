@@ -104,14 +104,97 @@
 .headers off
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
--- TODO!
+DROP TABLE IF EXISTS studios;
+DROP TABLE IF EXISTS movies;
+DROP TABLE IF EXISTS professionals;
+DROP TABLE IF EXISTS credits;
+DROP TABLE IF EXISTS acting;
 
 -- Create new tables, according to your domain model
--- TODO!
+
+CREATE TABLE studios(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    studio_name TEXT
+);
+
+CREATE TABLE movies(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    movie_name TEXT,
+    studio INTEGER,
+    rating TEXT,
+    year INTEGER
+);
+
+CREATE TABLE professionals(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    actor_first_name TEXT,
+    actor_last_name TEXT
+);
+
+CREATE TABLE credits(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    movie_ID  INTEGER,
+    fake_name_ID  INTEGER,
+    real_name_ID  INTEGER
+);
+
+CREATE TABLE acting(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    fake_name TEXT,
+    real_name_ID INTEGER,
+    movie_ID  INTEGER
+);
 
 -- Insert data into your database that reflects the sample data shown above
 -- Use hard-coded foreign key IDs when necessary
--- TODO!
+
+INSERT INTO studios(studio_name)
+VALUES ("Warner Bros."
+);
+
+INSERT INTO movies(movie_name,studio,rating,year)
+VALUES ("Batman Begins",1,"PG 13",2005); --ID 1
+
+INSERT INTO movies(movie_name,studio,rating,year)
+VALUES ("The Dark Knight",1,"PG 13",2008); --ID 2
+
+INSERT INTO movies(movie_name,studio,rating,year)
+VALUES ("The Dark Knight Rises",1,"PG 13",2012); --ID 3
+
+INSERT INTO professionals (actor_first_name, actor_last_name) VALUES 
+('Christian', 'Bale'),        -- ID 1
+('Michael', 'Caine'),         -- ID 2
+('Liam', 'Neeson'),           -- ID 3
+('Katie', 'Holmes'),          -- ID 4
+('Gary', 'Oldman'),           -- ID 5
+('Heath', 'Ledger'),          -- ID 6
+('Aaron', 'Eckhart'),         -- ID 7
+('Maggie', 'Gyllenhaal'),     -- ID 8
+('Tom', 'Hardy'),             -- ID 9
+('Joseph', 'Gordon-Levitt'),  -- ID 10
+('Anne', 'Hathaway');         -- ID 11
+
+INSERT INTO acting (fake_name, real_name_ID, movie_ID) VALUES
+('Bruce Wayne', 1, 1),
+('Alfred', 2, 1),
+('Ras Al Ghul', 3, 1),
+('Rachel Dawes', 4, 1),
+('Comissioner Gordon', 5,1); -- FIRST MOVIE BATMAN BEGINS
+
+INSERT INTO acting (fake_name, real_name_ID, movie_ID) VALUES
+('Bruce Wayne', 1, 2),
+('Joker', 6, 2),
+('Harvey Dent', 7, 2),
+('Alfred', 2, 2),
+('Rachel Dawes', 8,2); -- SECOND MOVIE THE DARK KNIGHT
+
+INSERT INTO acting (fake_name, real_name_ID, movie_ID) VALUES
+('Bruce Wayne', 1, 3),
+('Comissioner Gordon', 5, 3),
+('Bane', 9, 3),
+('John Blake', 10, 3),
+('Selina Kyle',11,3); -- 3rd MOVIE Dark Knight Rises
+
 
 -- Prints a header for the movies output
 .print "Movies"
@@ -119,7 +202,8 @@
 .print ""
 
 -- The SQL statement for the movies output
--- TODO!
+
+SELECT movies.movie_name, movies.year, movies.rating, studios.studio_name FROM movies LEFT JOIN studios on movies.studio = studios.id;
 
 -- Prints a header for the cast output
 .print ""
@@ -129,4 +213,7 @@
 
 
 -- The SQL statement for the cast output
--- TODO!
+
+SELECT movies.movie_name, professionals.actor_first_name, professionals.actor_last_name,acting.fake_name
+FROM professionals
+LEFT JOIN movies on professionals on professionals.
