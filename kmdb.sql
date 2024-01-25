@@ -211,9 +211,10 @@ SELECT movies.movie_name, movies.year, movies.rating, studios.studio_name FROM m
 .print "========"
 .print ""
 
-
 -- The SQL statement for the cast output
 
 SELECT movies.movie_name, professionals.actor_first_name, professionals.actor_last_name,acting.fake_name
-FROM professionals
-LEFT JOIN movies on professionals on professionals.
+FROM acting
+LEFT JOIN movies on acting.movie_ID = movies.id
+LEFT JOIN professionals on acting.real_name_ID = professionals.id;
+
