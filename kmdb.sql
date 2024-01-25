@@ -111,12 +111,12 @@ DROP TABLE IF EXISTS acting;
 
 -- Create new tables, according to your domain model
 
-CREATE TABLE studios(
+CREATE TABLE studios( -- the studios
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     studio_name TEXT
 );
 
-CREATE TABLE movies(
+CREATE TABLE movies( -- the movies
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     movie_name TEXT,
     studio INTEGER,
@@ -124,13 +124,13 @@ CREATE TABLE movies(
     year INTEGER
 );
 
-CREATE TABLE professionals(
+CREATE TABLE professionals( -- the actors
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     actor_first_name TEXT,
     actor_last_name TEXT
 );
 
-CREATE TABLE acting(
+CREATE TABLE acting( -- the roles played by the actors in the movies
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     fake_name TEXT,
     real_name_ID INTEGER,
