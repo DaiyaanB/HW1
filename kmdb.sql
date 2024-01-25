@@ -104,10 +104,9 @@
 .headers off
 
 -- Drop existing tables, so you'll start fresh each time this script is run.
-DROP TABLE IF EXISTS studios;
+DROP TABLE IF EXISTS studios; --Self explanatory, removes the table if already made...
 DROP TABLE IF EXISTS movies;
 DROP TABLE IF EXISTS professionals;
-DROP TABLE IF EXISTS credits;
 DROP TABLE IF EXISTS acting;
 
 -- Create new tables, according to your domain model
@@ -129,13 +128,6 @@ CREATE TABLE professionals(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     actor_first_name TEXT,
     actor_last_name TEXT
-);
-
-CREATE TABLE credits(
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    movie_ID  INTEGER,
-    fake_name_ID  INTEGER,
-    real_name_ID  INTEGER
 );
 
 CREATE TABLE acting(
@@ -175,21 +167,21 @@ INSERT INTO professionals (actor_first_name, actor_last_name) VALUES
 ('Anne', 'Hathaway');         -- ID 11
 
 INSERT INTO acting (fake_name, real_name_ID, movie_ID) VALUES
-('Bruce Wayne', 1, 1),
-('Alfred', 2, 1),
+('Bruce Wayne', 1, 1), -- adds the role, the real name of the actor, and the movie applicable with foreign keys
+('Alfred', 2, 1), -- Same but for alfred...
 ('Ras Al Ghul', 3, 1),
 ('Rachel Dawes', 4, 1),
 ('Comissioner Gordon', 5,1); -- FIRST MOVIE BATMAN BEGINS
 
 INSERT INTO acting (fake_name, real_name_ID, movie_ID) VALUES
-('Bruce Wayne', 1, 2),
+('Bruce Wayne', 1, 2), -- Repeats the structure above but for the second movie...
 ('Joker', 6, 2),
 ('Harvey Dent', 7, 2),
 ('Alfred', 2, 2),
 ('Rachel Dawes', 8,2); -- SECOND MOVIE THE DARK KNIGHT
 
 INSERT INTO acting (fake_name, real_name_ID, movie_ID) VALUES
-('Bruce Wayne', 1, 3),
+('Bruce Wayne', 1, 3), -- And finally the same again for the third...
 ('Comissioner Gordon', 5, 3),
 ('Bane', 9, 3),
 ('John Blake', 10, 3),
@@ -203,7 +195,9 @@ INSERT INTO acting (fake_name, real_name_ID, movie_ID) VALUES
 
 -- The SQL statement for the movies output
 
-SELECT movies.movie_name, movies.year, movies.rating, studios.studio_name FROM movies LEFT JOIN studios on movies.studio = studios.id;
+SELECT movies.movie_name, movies.year, movies.rating, studios.studio_name
+FROM movies
+LEFT JOIN studios on movies.studio = studios.id; -- need to pull in the Warner Bros. from earlier
 
 -- Prints a header for the cast output
 .print ""
@@ -215,6 +209,6 @@ SELECT movies.movie_name, movies.year, movies.rating, studios.studio_name FROM m
 
 SELECT movies.movie_name, professionals.actor_first_name, professionals.actor_last_name,acting.fake_name
 FROM acting
-LEFT JOIN movies on acting.movie_ID = movies.id
-LEFT JOIN professionals on acting.real_name_ID = professionals.id;
+LEFT JOIN movies on acting.movie_ID = movies.id -- need to do this to pull the movie names
+LEFT JOIN professionals on acting.real_name_ID = professionals.id; -- this is done to pull in the actors name against the role
 
